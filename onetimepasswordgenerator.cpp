@@ -3,6 +3,7 @@
 #include <QMessageAuthenticationCode>
 #include <QtEndian>
 #include <QDateTime>
+#include <QtMath>
 
 OneTimePasswordGenerator::OneTimePasswordGenerator(QObject *parent)
     : QObject{parent}
