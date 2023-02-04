@@ -35,7 +35,7 @@ QByteArray OneTimePasswordGenerator::generateHOTP(const QByteArray &rawSecret, q
         return QByteArray::number(truncatedHash % modulus, 10).rightJustified(length, '0');
 }
 
-QByteArray OneTimePasswordGenerator::generateHOTP(const QString &secret, quint64 counter, int length)
+QString OneTimePasswordGenerator::generateHOTP(const QString &secret, quint64 counter, int length)
 {
     return generateHOTP(fromBase32(secret), counter, length);
 }
@@ -46,7 +46,7 @@ QByteArray OneTimePasswordGenerator::generateTOTP(const QByteArray &rawSecret, i
     return generateHOTP(rawSecret, counter, length);
 }
 
-QByteArray OneTimePasswordGenerator::generateTOTP(const QString &secret, int length)
+QString OneTimePasswordGenerator::generateTOTP(const QString &secret, int length)
 {
     return generateTOTP(fromBase32(secret), length);
 }
