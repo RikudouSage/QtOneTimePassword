@@ -53,7 +53,6 @@ QByteArray OneTimePasswordGenerator::generateTOTP(const QString &secret, int len
 
 QByteArray OneTimePasswordGenerator::fromBase32(const QString &input)
 {
-    static const char base32Alphabet[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
     QByteArray result;
     result.reserve((input.length() * 5 + 7) / 8);
     int buffer = 0;
