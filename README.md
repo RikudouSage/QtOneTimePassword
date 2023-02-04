@@ -57,3 +57,5 @@ int main(int argc, char *argv[])
     return 0;
 }
 ```
+
+The string accepting functions are also invokable from QML.
