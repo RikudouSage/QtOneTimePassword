@@ -17,7 +17,7 @@ Then you add it to either your qmake `.pro` file or the your `CMakeLists.txt` (r
 
 ```qmake
 SOURCES += otp/onetimepasswordgenerator.cpp
-HEADERS += netimepasswordgenerator.h
+HEADERS += otp/netimepasswordgenerator.h
 ```
 
 **cmake** - add the files to your `add_executable` instruction:
