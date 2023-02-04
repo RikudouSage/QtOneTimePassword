@@ -58,4 +58,89 @@ int main(int argc, char *argv[])
 }
 ```
 
-The string accepting functions are also invokable from QML.
+The string accepting functions are also invokable from QML:
+
+```c++
+// main.cpp
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+
+#include "otp/onetimepasswordgenerator.h"
+
+int main(int argc, char *argv[])
+{
+    QGuiApplication app(argc, argv);
+
+    QQmlApplicationEngine engine;
+    const QUrl url(QStringLiteral("qrc:/main.qml"));
+
+    // register the generator as a qml type within com.vendor
+    qmlRegisterType<OneTimePasswordGenerator>("com.vendor", 1, 0, "OneTimePasswordGenerator");
+
+    engine.load(url);
+
+    return app.exec();
+}
+
+```
+
+```qml
+// main.qml
+import QtQuick 2.15
+import QtQuick.Window 2.15
+import QtQuick.Controls 2.15
+
+// import the registered C++ objects
+import com.vendor 1.0
+
+Window {
+    width: 640
+    height: 480
+    visible: true
+    title: qsTr("TOTP generator")
+
+    property string totp
+    property string hotp
+
+    // initialize an OneTimePasswordGenerator and give it an id by which it can be accessed
+    OneTimePasswordGenerator {
+        id: otpGenerator
+    }
+
+    Column {
+        width: parent.width
+        spacing: 10
+        TextField {
+            id: totpSecret
+            placeholderText: "Input the secret"
+            width: parent.width
+            onTextChanged: {
+                // here you call the methods of the C++ OneTimePasswordGenerator
+                hotp = otpGenerator.generateHOTP(text, hotpCounter.text || 0, 6);
+                totp = otpGenerator.generateTOTP(text, 6);
+            }
+        }
+        TextField {
+            id: hotpCounter
+            placeholderText: "Input the counter value (only for HOTP)"
+            width: parent.width
+            inputMethodHints: Qt.ImhDigitsOnly
+        }
+
+        Text {
+            text: "TOTP: " + totp
+        }
+        Text {
+            text: "HOTP: " + hotp
+        }
+
+        Button {
+            text: qsTr("Regenerate")
+            onClicked: {
+                totpSecret.textChanged();
+            }
+        }
+    }
+}
+
+```
