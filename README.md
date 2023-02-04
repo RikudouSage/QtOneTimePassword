@@ -42,9 +42,9 @@ QByteArray decodeBase32(const QString &input); // assume you have this function 
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+    QCoreApplication app(argc, argv);
 
-    const auto secret = a.arguments().at(1); // take the base32 encoded string from the first argument as a secret
+    const auto secret = app.arguments().at(1); // take the base32 encoded string from the first argument as a secret
 
     OneTimePasswordGenerator totp;
     qDebug() << totp.generateHOTP(secret, 10, 6); // create a HOTP, the counter is set to 10, the digits count is set to 6
