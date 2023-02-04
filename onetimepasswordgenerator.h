@@ -10,10 +10,10 @@ public:
     explicit OneTimePasswordGenerator(QObject *parent = nullptr);
 
     QByteArray generateHOTP(const QByteArray &rawSecret, quint64 counter, int length);
-    Q_INVOKABLE QByteArray generateHOTP(const QString &secret, quint64 counter, int length);
+    Q_INVOKABLE QString generateHOTP(const QString &secret, quint64 counter, int length);
 
     QByteArray generateTOTP(const QByteArray &rawSecret, int length);
-    Q_INVOKABLE QByteArray generateTOTP(const QString &secret, int length);
+    Q_INVOKABLE QString generateTOTP(const QString &secret, int length);
 private:
     QByteArray fromBase32(const QString &input);
 
